@@ -13,8 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Netflix',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.black,
+          textTheme: const TextTheme(
+              bodyText1: TextStyle(
+                color: Colors.white,
+              ),
+              bodyText2: TextStyle(color: Colors.white))),
       home: MainPageScreen(),
     );
   }
