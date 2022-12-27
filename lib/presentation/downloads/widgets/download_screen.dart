@@ -19,10 +19,11 @@ class DownloadScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: AppBarWidget(
-              title: 'Downloads',
-            )),
+          preferredSize: Size.fromHeight(50),
+          child: AppBarWidget(
+            title: 'Downloads',
+          ),
+        ),
         body: ListView.separated(
             padding: EdgeInsets.all(10),
             itemBuilder: ((context, index) => _widgetList[index]),
