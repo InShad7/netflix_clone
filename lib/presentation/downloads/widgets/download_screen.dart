@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/application/downloads/downloads_bloc.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants.dart';
 import 'package:netflix/presentation/widgets/app_bar_widget.dart';
@@ -88,14 +90,18 @@ class Section3 extends StatelessWidget {
 class Section2 extends StatelessWidget {
   Section2({Key? key}) : super(key: key);
 
-  final List imageList = [
-    "https://www.themoviedb.org/t/p/w440_and_h660_face/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
-    "https://www.themoviedb.org/t/p/w440_and_h660_face/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg",
-    "https://www.themoviedb.org/t/p/w440_and_h660_face/sv1xJUazXeYqALzczSZ3O6nkH75.jpg"
-  ];
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<DownloadsBloc>(context)
+          .add(const DownloadsEvent.getDownloadsImage());
+    });
+
+    // BlocProvider.of<DownloadsBloc>(context)
+    //     .add(const DownloadsEvent.getDownloadsImage());
+
     final Size size = MediaQuery.of(context).size;
+
     return Column(
       children: [
         const Text(
@@ -111,36 +117,45 @@ class Section2 extends StatelessWidget {
           style: TextStyle(fontSize: 16, color: Colors.grey),
         ),
         KHeight,
-        SizedBox(
-          height: size.width,
-          width: size.width,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              CircleAvatar(
-                radius: size.width * 0.383,
-                backgroundColor: Colors.grey.withOpacity(0.5),
-              ),
-              DownloadsImageWidget(
-                imageList: imageList[2],
-                margin: EdgeInsets.only(left: 170, top: 50),
-                angle: 25,
-                size: Size(size.width * 0.35, size.width * 0.55),
-              ),
-              DownloadsImageWidget(
-                imageList: imageList[1],
-                margin: EdgeInsets.only(right: 170, top: 50),
-                angle: -20,
-                size: Size(size.width * 0.35, size.width * 0.55),
-              ),
-              DownloadsImageWidget(
-                imageList: imageList[0],
-                margin: EdgeInsets.only(bottom: 35, top: 50),
-                size: Size(size.width * 0.4, size.width * 0.6),
-                radius: 8,
-              )
-            ],
-          ),
+        BlocBuilder<DownloadsBloc, DownloadsState>(
+          builder: (context, state) {
+            return SizedBox(
+              height: size.width,
+              width: size.width,
+              child: state.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: size.width * 0.383,
+                          backgroundColor: Colors.grey.withOpacity(0.5),
+                        ),
+                        DownloadsImageWidget(
+                          imageList:
+                              '$imageAppendUrl${state.downloads[0].posterPath}',
+                          margin: const EdgeInsets.only(left: 170, top: 50),
+                          angle: 25,
+                          size: Size(size.width * 0.35, size.width * 0.55),
+                        ),
+                        DownloadsImageWidget(
+                          imageList:
+                              '$imageAppendUrl${state.downloads[2].posterPath}',
+                          margin: const EdgeInsets.only(right: 170, top: 50),
+                          angle: -20,
+                          size: Size(size.width * 0.35, size.width * 0.55),
+                        ),
+                        DownloadsImageWidget(
+                          imageList:
+                              '$imageAppendUrl${state.downloads[1].posterPath}',
+                          margin: const EdgeInsets.only(bottom: 35, top: 50),
+                          size: Size(size.width * 0.4, size.width * 0.6),
+                          radius: 8,
+                        )
+                      ],
+                    ),
+            );
+          },
         ),
       ],
     );

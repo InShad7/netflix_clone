@@ -5,9 +5,21 @@ import 'package:netflix/presentation/home/widgets/custom_btn_widget.dart';
 import 'package:netflix/presentation/widgets/video_widget.dart';
 
 class ComingSoonWidget extends StatelessWidget {
-  const ComingSoonWidget({
-    Key? key,
-  }) : super(key: key);
+  final String id;
+  final String month;
+  final String day;
+  final String posterPath;
+  final String movieName;
+  final String description;
+
+  const ComingSoonWidget(
+      {super.key,
+      required this.id,
+      required this.month,
+      required this.day,
+      required this.posterPath,
+      required this.movieName,
+      required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +31,16 @@ class ComingSoonWidget extends StatelessWidget {
           height: 450,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                'FEB',
-                style: TextStyle(fontSize: 19, color: greyColor),
+                month,
+                style: const TextStyle(fontSize: 19, color: greyColor),
               ),
               Text(
-                '11',
-                style: TextStyle(
+                day,
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
+                    fontSize: 28,
                     letterSpacing: 4),
               )
             ],
@@ -40,17 +52,22 @@ class ComingSoonWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             const VideoWidget(),
+              VideoWidget(
+                url: posterPath,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'The Chronicles of Narnia',
-                      style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: -3),
+                      movieName,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        // letterSpacing: -3,
+                      ),
                     ),
                   ),
                   Row(
@@ -72,19 +89,23 @@ class ComingSoonWidget extends StatelessWidget {
                 ],
               ),
               KHeight,
-              const Text('Coming on Friday'),
+              Text('Coming on $day $month'),
               KHeight,
-              const Text(
-                'The Chronicles of Narnia',
-                style: TextStyle(
+              Text(
+                movieName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               KHeight,
-              const Text(
-                'Landing the lead in the school musical is a dream come true for Jodi, until the pressure sends her confidence\n - and relationship -into a tailship',
-                style: TextStyle(color: greyColor),
+              Text(
+                description,
+                maxLines: 7,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(color: greyColor),
               )
             ],
           ),
