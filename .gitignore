@@ -45,4 +45,4 @@ app.*.map.json
 
 
 #files ignore(api_key)
-lib\infratructure\api_key.dart 
+lib/infratructure/api_key.dart 

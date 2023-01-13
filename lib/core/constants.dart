@@ -25,4 +25,9 @@ const newHotTempImg =
 const everyOneWatchImg =
     "https://www.themoviedb.org/t/p/w1066_and_h600_bestv2/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg";
 
+
+
+
+    
+
 const imageAppendUrl = 'https://image.tmdb.org/t/p/w500';

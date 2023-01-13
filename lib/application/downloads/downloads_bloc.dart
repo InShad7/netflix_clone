@@ -14,7 +14,10 @@ part 'downloads_bloc.freezed.dart';
 class DownloadsBloc extends Bloc<DownloadsEvent, DownloadsState> {
   final IDownloadsRepo _downloadsRepo;
   DownloadsBloc(this._downloadsRepo) : super(DownloadsState.initial()) {
+
+    // get downloads movie data
     on<_GetDownloadsImage>((event, emit) async {
+      //send loading to ui...
       emit(
         state.copyWith(
           isLoading: true,
